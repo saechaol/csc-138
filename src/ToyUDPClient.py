@@ -1,6 +1,6 @@
 from socket import * # includes python's socket library
 
-serverName = 'hostname'
+serverName = 'localhost'
 serverPort = 12000
 
 # create UDP socket for server
