@@ -5,7 +5,7 @@ from socket import *
 
 # specify localhost and port
 serverName = 'localhost'
-serverPort = '12000'
+serverPort = 12000
 
 # create TCP socket for server
 clientSocket = socket(AF_INET, SOCK_STREAM)
