@@ -27,7 +27,7 @@ while True:
 
 	# reads bytes from the socket but not the address, unlike with UDP
 	sentence = connectionSocket.recv(1024).decode()
-	capitalizedSentence = sentence.uppder()
+	capitalizedSentence = sentence.upper()
 
 	# send message back to client with the connection socket
 	connectionSocket.send(capitalizedSentence.encode())
