@@ -10,49 +10,58 @@
 # import socket module
 from socket import *
 
+LOCAL_HOST = "127.0.0.1"
+SERVER_PORT = 12000
+
 serverSocket = socket(AF_INET, SOCK_STREAM)
 
 # prepare server socket
 
-# --start
+# bind the port to this socket
+serverSocket.bind((LOCAL_HOST, SERVER_PORT))
 
-
-
-# --end
+# set the port to listening mode
+# the socket will then be ready to receive client connection requests
+serverSocket.listen(1)
 
 while True:
 	# establish connection
-	print 'Ready to serve...'
-
-	# connectionSocket, addr = --start --end
+	print('Ready to serve...')
+	connectionSocket, addr = serverSocket.accept()
 
 	try:
-		# message = --start --end
-		filename = message.split()[1]
+		message = connectionSocket.recv(2048)
+		filename = message.split()[1].decode()
+		#filename = "index.html" if filename == "/" else filename[1:]
 		
 		f = open(filename[1:])
+		#print("filename: {}".format(filename))
 
-		# outputdata = --start --end
+		outputdata = f.read()
 
-		# send one http header line into socket
-
-		# --start
-
-		# --end
+		# send 200 ok response
+		response = ("HTTP/1.1 200 OK\n"
+					"Server: Python 3.8.3\n"
+					"Content-Type: text/html; charset=utf-8\r\n\n")
+		connectionSocket.send(response.encode())
 
 		# send the content of the requested file to the client
-		for i in range(o, len(outputdata)):
-			connectionSocket.send(outputdata[i])
+		for i in range(0, len(outputdata)):
+			connectionSocket.send(outputdata[i].encode())
+
+		connectionSocket.send("\r\n".encode())
 		connectionSocket.close()
+
 	except IOError:
 		# send 404 response
-		# --start
-
-		# --end
+		response = ("HTTP/1.1 404 Not Found\n"
+					"Server: Python 3.8.3\n"
+					"Content-Type: text/html; charset=utf-8\r\n\n")
 
 		#close client socket
-		# --start
+		connectionSocket.send(response.encode())
+		connectionSocket.send("\r\n".encode())
+		connectionSocket.close()
 
-		# --end
 serverSocket.close()
 
