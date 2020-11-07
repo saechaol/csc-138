@@ -10,12 +10,12 @@
 # import socket module
 from socket import *
 
+
 LOCAL_HOST = "127.0.0.1"
 SERVER_PORT = 12000
 
-serverSocket = socket(AF_INET, SOCK_STREAM)
-
 # prepare server socket
+serverSocket = socket(AF_INET, SOCK_STREAM)
 
 # bind the port to this socket
 serverSocket.bind((LOCAL_HOST, SERVER_PORT))
@@ -31,11 +31,11 @@ while True:
 
 	try:
 		message = connectionSocket.recv(2048)
+
 		filename = message.split()[1].decode()
-		#filename = "index.html" if filename == "/" else filename[1:]
-		
-		f = open(filename[1:])
-		#print("filename: {}".format(filename))
+
+		f = open(filename[1:], "r")
+		print("filename: {}".format(filename))
 
 		outputdata = f.read()
 
@@ -47,7 +47,7 @@ while True:
 
 		# send the content of the requested file to the client
 		for i in range(0, len(outputdata)):
-			connectionSocket.send(outputdata[i].encode())
+			connectionSocket.send(outputdata[i])
 
 		connectionSocket.send("\r\n".encode())
 		connectionSocket.close()
@@ -60,7 +60,7 @@ while True:
 
 		#close client socket
 		connectionSocket.send(response.encode())
-		connectionSocket.send("\r\n".encode())
+		connectionSocket.send("\r\n".enocde())
 		connectionSocket.close()
 
 serverSocket.close()
