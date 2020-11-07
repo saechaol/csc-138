@@ -1,17 +1,17 @@
 # saechaol
 
 # Specified requirements:
-#  - handle http requests at least one at a time
-#  - accept and parse http requests
-#  - obtain the requested file from the web server
-#  - create and send http response
-#  - handle 404 file not found responses
+#  	- handle http requests at least one at a time
+#  	- accept and parse http requests
+#  	- obtain the requested file from the web server
+#  	- create and send http response
+#  	- handle 404 file not found responses
 
 # import socket module
 from socket import *
 
 
-LOCAL_HOST = "127.0.0.1"
+LOCAL_HOST = '127.0.0.1'
 SERVER_PORT = 12000
 
 # prepare server socket
@@ -34,33 +34,33 @@ while True:
 
 		filename = message.split()[1].decode()
 
-		f = open(filename[1:], "r")
-		print("filename: {}".format(filename))
+		f = open(filename[1:], 'r')
+		print('filename: {}'.format(filename))
 
 		outputdata = f.read()
 
 		# send 200 ok response
-		response = ("HTTP/1.1 200 OK\n"
-					"Server: Python 3.8.3\n"
-					"Content-Type: text/html; charset=utf-8\r\n\n")
+		response = ('HTTP/1.1 200 OK\n'
+					'Server: Python 3.8.3\n'
+					'Content-Type: text/html; charset=utf-8\r\n\n')
 		connectionSocket.send(response.encode())
 
 		# send the content of the requested file to the client
 		for i in range(0, len(outputdata)):
 			connectionSocket.send(outputdata[i])
 
-		connectionSocket.send("\r\n".encode())
+		connectionSocket.send('\r\n'.encode())
 		connectionSocket.close()
 
 	except IOError:
 		# send 404 response
-		response = ("HTTP/1.1 404 Not Found\n"
-					"Server: Python 3.8.3\n"
-					"Content-Type: text/html; charset=utf-8\r\n\n")
+		response = ('HTTP/1.1 404 Not Found\n'
+					'Server: Python 3.8.3\n'
+					'Content-Type: text/html; charset=utf-8\r\n\n')
 
 		#close client socket
 		connectionSocket.send(response.encode())
-		connectionSocket.send("\r\n".enocde())
+		connectionSocket.send('\r\n'.enocde())
 		connectionSocket.close()
 
 serverSocket.close()
