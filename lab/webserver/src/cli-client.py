@@ -51,20 +51,20 @@ args = cliParser.parse_args()
 clientSocket = socket(AF_INET, SOCK_STREAM)
 
 # for TCP connections, the client needs to first connect to the server
-print("Host: " + args.hostname + "\nPort: " + str(args.port) + "\nRequested file: " + args.file)
+print('Host: ' + args.hostname + '\nPort: ' + str(args.port) + '\nRequested file: ' + args.file)
 clientSocket.connect((args.hostname, args.port))
 
 # send an HTTP GET request and retrieve the specified file
-request = "GET /{} HTTP/1.1".format(args.file)
-clientSocket.sendall(request.encode("utf-8"))
+request = 'GET /{} HTTP/1.1'.format(args.file)
+clientSocket.sendall(request.encode('utf-8'))
 
-response = ""
+response = ''
 while True:
 	responseData = clientSocket.recv(4096)
 	if not responseData:
 		break
 	else:
-		response += responseData.decode("utf-8")
+		response += responseData.decode('utf-8')
 
 print(response)
 
