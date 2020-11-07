@@ -16,7 +16,7 @@ serverSocket.bind(('', serverPort))
 # the socket is now ready to receive client connection requests
 serverSocket.listen(1)
 
-print 'The server is ready to receive messages'
+print ('The server is ready to receive messages')
 
 while True:
 	# connect to a client
