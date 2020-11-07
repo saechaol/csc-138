@@ -64,5 +64,8 @@ while True:
 		break
 	else:
 		response += responseData.decode("utf-8")
-		
+
 print(response)
+
+# close the socket
+clientSocket.close()
